@@ -1,0 +1,60 @@
+Techno Managerial:
+	
+	Roles & Responsibilities:
+		estimation, design & develop
+		Participate in peer code reviews
+		Engage with BA if the user-stories are not filled with all the technical details
+		Development, bug-fixing
+		Help QA team with some test scenarios
+		Engage with other team members on some technical chalenges/blockers
+
+	Project:
+		Currently i work with T-mobile, an organization providing services like wireless voice, video calls and dataservices, both 4g and 5g, currently it is doing alot of investment under 5g sector
+		within t-mob i work with provisioning services team, where we handle multiple microservices, we deal with numerous number orf internal and externa service call, which are primarily identified by msisdn and imsi we assess if particular subscriber is eligible for some services or not and execute corresponing business logic, also we develop and maintain code related to various subscription activities, at the end we publish responses to event streaming platforms so that analysts at t-mo can later analyze the data and gain more insights.
+
+	Strengths:
+		Take ownership and responsibilities of what i do
+		Quick learner
+		communicate effectively
+
+	Weakness:
+		poor at using tools like ms office word, ppt
+		not good at physical presentations, maybe bcoz didn't get enough opportunities on that side, however if given a chance I would love to take it as a learning opportunity
+
+	Leave last job:
+		I don't see any room for growth in my last job
+		your job post looked like a perfect match for my skillset
+		I feel bigger orgs will give me more opptys, and can utilize me to my full potential
+
+	Why do you want for our company:
+		Your reputation, also you've big presence in this industry, can give me more opportunities
+		Your interview process involved alot of filtering, it gives me a sense that I'll be working with some top talents, I always want to surround myself with people who are a level above than me.
+		You've clients from top tech companies, working with them is a good oppty
+		Hope my current skillset and willingness to learn will definitely add more value to your org.
+
+	Future aspirations:
+		I want gain insights on devops functionalities as well like learnign docker and kubernetes, so that I can become some handful developers who can do from development to deployment. I feel industry also demands for these kind of roles in future, so learning these will give me a sense of security and confidence.
+
+	Problem that you recently solved:
+		problem: A critical bug in a microservice was causing incorrect subscriber eligibility results, leading to 			customer complaints.
+		Solution: I identified the root cause by thoroughly debugging the code and found that a conditional statement 		was incorrectly implemented. I fixed the logic error and added unit tests to ensure it wouldn't happen 			again. This resolved the issue, and the customer complaints stopped.
+
+	Technical design of your project:
+		web api with microservices architecture, with domain driven design
+		we use spring boot cause of various benefits like auto-config and dependency injection
+		entity framework to integrate with db
+		jwt tokens for authentication and authorization
+		we follow solid for loosely coupled design  
+
+	Why should I hire you:
+		few resons:
+		1. Ownership and responsibility for my work, I rarely get bugs related to my work
+		2. Quick learner, recently we moved from legacy to containerization, we were told to learn docker and kubernetes, I did pretty well in those topics
+		3. My current skillset perfectly matches with the job description.
+		So if you hire me for above reasons, I hope i would definitely provide some value and also give good rate of return for you.
+
+	
+
+
+
+

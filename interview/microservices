@@ -1,0 +1,53 @@
+MICROSERVICES:
+	
+	When do you think monolith should be migrated to microservices?
+		huge project
+		alot of teams are working on it
+		scalability issues are there
+
+	Disadvantages:
+		network latency
+		if not properly implemented, can still be tightly coupled between services
+		transaction management
+		infra overhead
+
+	Challenges of building microservices:
+		Service Boundaries:
+			Determining the boundaries of each microservice can be complex. Poorly defined boundaries can lead to tightly coupled services, which are difficult to manage and scale.
+			sol: Use decomposition patterns like DDD, decomposition by business capabilities.
+		Communication:
+			inter service comm'n
+			sol: lightweight like REST
+		Data Management:
+			Data consistency across diff microservices can be challenging.
+			sol: Use CQRS, event sourcing, eventual consistency
+		Service Discovery:
+			how will they locate eachother.
+			sol: Use service registration platforms like eureka, kubernetes inbuilt service discovery
+		Fault tolerance and resiliency:
+			how will your services handle, network failures, graceful fallbacks, service recovery
+			sol: retries, rate limiter, circuit breaker pattern
+		Distributed Tracing and Monitoring:
+			Monitoring and debugging a system composed of multiple microservices is complex due to the distributed nature of the architecture.
+			sol:  Implement distributed tracing tools such as Zipkin or Jaeger to trace requests across services. Use centralized logging (e.g., ELK stack) and monitoring (e.g., Prometheus, Grafana) to gain visibility into the system.
+		Security:
+			 Securing inter-service communication, data, and user authentication/authorization in a distributed system is more challenging than in a monolithic architecture.
+			 sol: Implement API gateways (e.g., Kong, Zuul) for centralized security and authentication. Use OAuth2 and OpenID Connect for secure authentication and authorization.
+
+	how do you ensure reliable communication between microservices:
+		Use Robust Communication Protocols
+			HTTP/REST: Simple and widely used, suitable for synchronous communication.
+			gRPC: High-performance, language-agnostic RPC framework, suitable for low-latency communication.
+			Message Brokers (e.g., Kafka, RabbitMQ): Suitable for asynchronous communication, ensuring messages are reliably delivered even if the recipient service is temporarily unavailable.
+
+			Implement resilience patterns, like circuit breaker, retries and rate limiting.
+
+	common performance bottlnecks in microservices:
+		Network Latency
+		Improper Load Balancing
+			Use smart load balancing strategies (e.g., round-robin, least connections).
+			Implement client-side load balancing with service discovery.
+			Continuously monitor and adjust load balancing configurations.
+		 Logging and Monitoring Overhead
+		 	Log at appropriate levels and avoid excessive logging in production.
+		 Lack of Caching

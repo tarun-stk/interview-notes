@@ -1,0 +1,130 @@
+JUNIT
+	open source and free testing framework for java apps
+	launched in 1997
+	very famous in java community bcause of ease of use
+	lightweight app
+	
+	Mocking
+		process of creating a dummy obj or substancial obj for real obj
+		used in case of testing app in isolation manner(specially when one comp is depenedent upon diff component)
+		two kinds of mocking frameworks avaliable
+			1. Proxy based mocking framework(stub based) ex: easy mock
+			2. Byte code manipulation based mock framwe ex: power mock
+		
+		Disadvantages of proxy based framework	
+			can't test final classes and final methods
+			can't test static methods
+			can't test private methods
+		So we use Byte code based mocking framework to mock in above cases.
+		
+	Testing spring apps
+		spring boot provides number of utilities and annotations to help when testing your app	
+		test support is provided by two modules
+			spring-boot-test (core items available in this)
+			spring-boot-test-autoconfigure (supports auto-configuration for tests)
+		spring boot by default provides test dependencies the moment proj got created. you don;t have to add anythign
+		
+Annotations:
+	@WebMvcTest -> used at the top of the class, with value=className(target class) 
+	@MockBean -> used to create a dummy object for dependent (like autowired)
+	
+
+Interfaces:
+	MockMvc -> used to send requests for rest controllers.
+	
+	sample for get requests.
+	
+		@WebMvcTest(value=WelcomeRestController.class)
+		public class TestWelcomeRestController {
+		
+			@MockBean
+			// creating a mockbean for dependent bean.
+			private WelcomeService welcomeService;
+			
+			@Autowired
+			// MockMvc is used to perform http reqs.
+			private MockMvc mockMvc;
+			
+			@Test
+			public void testGetWelcomeMessage() throws Exception {
+				when(welcomeService.welcomeServiceMessage()).thenReturn("Mocking..!");
+				
+				// creating the request.
+				MockHttpServletRequestBuilder requestBuidler = MockMvcRequestBuilders.get("/welcome");
+				
+				// performign/send the request.
+				ResultActions perform = mockMvc.perform(requestBuidler);
+				
+				// perform the action and get resutl.
+				MvcResult mvcResult = perform.andReturn();
+				
+				// get the response from api
+				MockHttpServletResponse response = mvcResult.getResponse();
+				
+				// get status code.
+				int status = response.getStatus();
+				
+				assertEquals(200, status);	
+			}
+	}	 
+	
+	sample for post requests.
+	
+	@WebMvcTest(value=BookRestController.class)
+	public class TestBookRestController {
+	
+	@MockBean
+	private BookService bookService;
+	
+	@Autowired
+	private MockMvc mockMvc;
+	
+	@Test
+	public void testAddBook() throws Exception {
+		// ArgumentMatchers.any()) is a method that accepts any input
+		when(bookService.saveBook(ArgumentMatchers.any())).thenReturn(true);
+		
+		// create boot obj
+		Book book = new Book(101, "Spring Boot", 450.0);
+		//convert book obj to bookjson
+		ObjectMapper mapper = new ObjectMapper();
+		String bookJson = mapper.writeValueAsString(book);
+		
+		//create the request
+		MockHttpServletRequestBuilder reqBuilder = MockMvcRequestBuilders.post("/addBook")
+							  .contentType(MediaType.APPLICATION_JSON)
+							  .content(bookJson);
+		
+		// send the request.
+		ResultActions perform = mockMvc.perform(reqBuilder);
+		//perform and return.
+		MvcResult mvcResult = perform.andReturn();
+		// get the response.
+		MockHttpServletResponse response = mvcResult.getResponse();
+		// get the status.
+		int status = response.getStatus();
+		
+		assertEquals(203, status);
+	}
+}
+
+Junit
+	Unit testing
+		process of testing unit amount of work is called as unit testing
+		as part of unit testing we will use mock objects
+		the process of creating substitute/alternate for real obj is called a mock obj
+		there are two types of mock frameworks available in market
+			1. proxy based (easy mock, mockito)
+			2. byte code manipulation (power mock, Jmockito)
+		
+		@WebMvcTest(value=targetClass)
+			this is used on top of the test class indicating that this is a test class
+		
+		@MockBean
+			is used to create a mock/substitute obj 
+			eg: to test controller we need service bean so we will create a mock bean for that service and continure our testing of controller
+		MockMvc -> is a class which has methods to make api calls
+			 this is required to send http requests to the controller
+		You need Junit platform dependency to run junit in the project
+		Industry bench mark is 85% code coverage
+		If we don't want to test any particular class/package we need to exclude them from the jacoco plugin usign exclude tags in pom.xml

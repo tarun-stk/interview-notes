@@ -1,0 +1,760 @@
+Spring Boot
+
+Annotations:
+
+	Beans:
+		can be created using following annotations
+		1. Service
+		2. Repository
+		3. Component
+		
+	Configuration:
+		a spring container
+		We can declare beans using the @Bean annotation in a configuration class.
+		 
+	Controller:
+		@Controller is a class level annotation which tells the Spring Framework that this class serves as a controller in Spring MVC:
+	
+	ComponentScan:
+		Spring can automatically scan a package for beans if component scanning is enabled.
+		@ComponentScan configures which packages to scan for classes with annotation configuration. 
+		We can specify the base package names directly with one of the basePackages or value arguments (value is an alias for basePackages)
+		
+	
+	@PathVariable:
+		- Simply put, the @PathVariable annotation can be used to handle template variables in the request URI mapping,  
+		and use them as method parameters.
+		
+		@GetMapping("/api/employees/{id}")
+		ResponseBody
+		public String getEmployeesById(@PathVariable("id") String id) {
+		return "ID: " + id;
+		}
+		- In this example, we use @PathVariable annotation to extract the templated part of the URI represented by the variable {id}.
+
+		-A simple GET request to /api/employees/{id} will invoke getEmployeesById with the extracted id value:
+
+		http://localhost:8080/api/employees/111 
+		---- 
+		ID: 111
+
+	@Controller and @RestController
+		-We can use the first annotation for traditional Spring controllers, and it has been part of the framework for a very long time.
+		Spring 4.0 introduced the @RestController annotation in order to simplify the creation of RESTful web services. 
+		It's a convenient annotation that combines @Controller and @ResponseBody, 
+		which eliminates the need to annotate every request handling method of the controller class with the @ResponseBody annotation.
+		
+	@Controller
+		-We can annotate classic controllers wi th the @Controller annotation. 
+		This is simply a specialization of the @Component class, which allows us to auto-detect implementation classes through the classpath scanning.
+		-We typically use @Controller in combination with a @RequestMapping annotation for request handling methods.
+		Let's see a quick example of the Spring MVC controller:
+
+		@Controller
+		@RequestMapping("/books")
+		public class SimpleBookController {
+
+			@GetMapping("/{id}", produces = "application/json")
+			public @ResponseBody Book getBook(@PathVariable int id) {
+				return findBookById(id);
+			}
+
+			private Book findBookById(int id) {
+				// ...
+			}
+		}
+		-We annotated the request handling method with @ResponseBody. This annotation enables automatic serialization of the return object 
+		into the HttpResponse.
+		
+	@RestController
+		@RestController is a specialized version of the controller. It includes the @Controller and @ResponseBody annotations, and as a result, 
+		simplifies the controller implementation:
+
+		@RestController
+		@RequestMapping("books-rest")
+		public class SimpleBookRestController {
+    
+			@GetMapping("/{id}", produces = "application/json")
+			public Book getBook(@PathVariable int id) {
+				return findBookById(id);
+			}
+
+			private Book findBookById(int id) {
+				// ...
+			}
+		}
+		-The controller is annotated with the @RestController annotation; therefore, the @ResponseBody isn't required.
+		
+		
+		
+SPRING BOOT
+
+TO CREATE A NEW SPRING BOOT PROJECT:
+	Install STS > choose workspace > create new spring boot proj > choose required things
+	This will give a project which will come from spring.io website.
+	Project contains one project with main class annotated with @SpringBootApplication.
+	Inside the main method we've
+		ConfigurableApplicationContext context = SpringApplication.run(mainClassName.class, args);
+		this context holds the objects of classes which are annotated with @component
+	
+Annotations :
+	@component(on top of class) : spring boot recognises this a bean and creates one object by default,.
+		To get default object must be annotated with @component.
+	@scope("prototype") (on top of class): spring boot creates objects only when we create but not by default and how many times we create that many times obj will be created.
+		creates only when we do getBean.
+		This is not singleton when you do @scope("prototype")
+		Singelton : the scenario of creating only one object by default.
+	@Autowired : it allows to identify other object in the spring container. Should be anotated before obj decleration.
+		Class A dependent on Class B (class A needs an instance of class B).
+		class A {
+			private B b;  --> throw an error because it can't automatically search for object of class B;
+			@Autowired
+			private B b1;  --> now able to search for the object of class B;
+				//And class B must be annotated with @Component to create a bean/object.
+		} 
+	@Primary : When you've multiple implementations for particular type, then whichever implementation has this annotation 		will be injected by default.
+	@Qualifier : To identify by name (like @Component("computer"))
+	Ex : class A {
+			private B b;  --> throw an error because it can't automatically search for object of class B;
+			@Autowired
+			@Qualifier("bbb")  --> searching by name, the class B must be annotated with @Component("bbb")
+			private B b1;  --> now able to search for the object of class B;
+				//And class B must be annotated with @Component to create a bean/object.
+		} 
+		@Autowired searches by type.
+		@Qualifier searches by name.
+		
+		
+		
+	** Creating a web App**
+	Create a spring starter project > select web while creating.
+	After creating go to main folder > create web app folder > create a jsp file like home.jsp
+	Create a class under that existing package with name as HomeController. Annotate it with @Controller.
+	write a method void home() {}
+	annotate it with @RequestMapping.
+	like 
+	@Controller.
+	class A {
+		@RequestMapping
+		public void home() {}
+	}
+	
+	
+Spring Boot from Udemy by Char Darby.
+	Why Spring Boot
+		building a spring app is really difficult.
+		like..
+		1. what maven archetype to use
+		2. which maven dependenmcies do i need.
+		3. how do i set up config(xml or java)
+		4. how do i install the server. (tomcat, jboss etc)
+		
+	The problem
+		tons of config like, componentScanning, viewresolver, dispatcherservlet
+		easy to make a mistake, very error prone
+	
+	Spring Boot solution
+		main goal is to make it easy to get started
+		minimize the amount of manual config
+			perform auto-config based on props files and jar classpath
+		help to resolve dependency conflicts(Maven or gradle)
+		provides an embedded http server so to start quicky
+		
+	spring initializr
+		website to quicky create a maven or grable proj and just import and use.
+		start.spring.io
+	running spring boot 
+		spring boot can be run standalone (includes embedded server)
+		run the boot app from the ide or command line(mvn spring-boot:run)
+		for command line -- java-jar jarfilename.jar
+		
+	spring boot internally uses spring rest and spring mvc
+	spring boot is mainly to make config easier
+	
+	in eclipse we've an error the moment we create our boot app]
+	fix this as following 
+	go to properties
+	l
+	and save error goes. and update the maven proj
+	
+Spring boot proj structure from spring initializr with maven
+
+	Contains following files:
+		src/main/java
+		src/main/resources
+		src/test/java
+		Maven dependencies
+		target
+		help.md
+		mvnw
+		pom.xml
+		
+	spring boot uses maven standard directory structure
+	maven wrapper files
+	mvnw allows you to run a maven proj
+		no need to have maven installed or present in your path
+		if correct version of maven is not found on your computer 
+			it will automatically downloads correct version and runs maven
+		2 files are provided
+			mvnw.cmd for ms windows
+			mvnw.sh for linux/mac
+		if you have maven pre installed on your computer, then you can delete these files.
+		
+	pom.xml
+		it contains the inf that you gave during the spring initializr
+		dependencies : spring-boot-starter-web  --> collection of maven dependencies
+		spring-boot-starter-web contains - spring-web, spring-webmvc, hibernate-validator, tomcat etc
+		
+		also it contains spring boot maven plugins at the bottom of the file
+		this plugin is used to package  an executable command to run on command line
+		or to create war archive file 
+		
+	Main boot app
+	@SpringBootApplication -> enables auto config, componentScanning, additional config
+		compose of the following annotes
+			@EnableAutoConfiguration
+			@ComponentScanning
+			@Configuration -- > able to register extra beans with @bean or import other config classes
+	SpringApplication -> spl class to bootstrap our app
+		SpringApplication.run(ourprojname.class, args)
+		behind the scenes 
+		creates application context and register all beans
+		starts the embedded server tomcat etc,
+		
+	More on component scanning
+	place your main app class in the root package above your other packages
+	this implicitly defines a base search package	
+		allows you to leverage default component scanning
+		no need to explicitly reference the base package name
+	if you have other packages that violate the root package structure even then you can scan them using
+		@SpringBootApplication(scanBasePackages{"org.acme.iot.utils"})
+		if you have more use comma seperated
+		
+	Application properties
+	created byh the spring initialixzr and empty at beginnning
+		by default boot will load properties from : application.properties file
+		add properties like
+		server.port=8585
+		coach.name = Mickey Mouse
+		
+	read the data from application.properties
+		@Value("${coach.name})
+		private String coachName;
+	
+	static directory
+		by default boot will load static resources from '/static' directory
+		ex: html files, css files js, images etc
+	
+	Templates
+	boot includes auto-config for followign template engines
+		freemarker
+		thymeleafg
+		mustache
+		
+	Spring boot starters
+		curated list of maven depenmdencies
+		colleciotn of dependencies grouped together
+		tested and verified by the spring dev team
+		makes it much easier for the developer to get started with spring
+		reduces the amount of maven config
+	
+	Spring boot dev-tools
+		it allows to restart the server the moment u save
+		
+	Spring boot actuator
+		how can i monitor and manage my app
+		how can i check the app health
+		how can i access app metrics
+		
+		solution:
+		spring boot actuator
+		exposes endpoints to monitor and manage your app
+		you easily get devops functionality out of the box
+		simply add the dependency to your pom file
+		rest endpoints are automatically added to your app
+		
+		add the dependency <spring-boot-starter-actuator> to your pom file and that's it use it
+		endpoints are prefixed with /actuator
+		
+		/health health info about your app
+			normally used to monitoring apps to see if your app is up or downloads
+			/actuator/health
+		/info info about your proj
+			default is empty
+			/actuator/indo
+			update app.properties with your app info
+			eg: infor.app.name=My super cool application
+				info.app.description=a craxy fun app
+				info.app.version=1.0.0
+				
+				anything that starts with info will be used by /info endpoints
+				and will return a json obj
+				
+			additional actuator endpoints
+				/beans - list of all beans registerd in the spring application context
+				/mappings - list of all @RequestMApping paths
+				/auditevents - audit events for uour app
+			
+			by default only health and info endpoints are exposed
+			to expose all endpoints over http
+			use this line in app.properties file
+			==> management.endpoints.web.exposure.include=*
+		
+		
+		
+Spring REST from Udemy By Chad Darby
+https://www.udemy.com/course/spring-hibernate-tutorial/learn/lecture/10289786#questions
+
+	How to connect to the server(weather service)
+		we can make rest api calls over http
+		rest: representational state transfer
+		lyt weight approach for communication between apps.
+	Rest is lang independent
+		client can use nay prog lang
+		server can use any pro lang
+	data format
+		rest apps can use any data format
+		common is xml and json
+		
+		
+Hibernate:
+	A persistence for persisting/saving java objs in a database
+	
+	benefits:
+		hibernate handles all of the low level sql
+		minimizes the amount of jdbc code u have to develop
+		hibernate provides the object-to-relational mapping (orm)
+		
+	object-to-relational mapping
+		developer defines mapping between java class and db table
+		
+	hibernate operations
+		SAVE
+		for save we've session.save method which will store the obj in db and return the id. which will be the primary key
+		// created
+		Student theStudent = new STudent("Tarun", "KLumar");
+		// save
+		int theID = (Integer) session.save(theStudent);
+		
+		//Retrieve
+		// first save and get the primary key using session.save() as shown above.
+		// nov retrive from db using primary key
+		Student myStudent = session.get(Student.class, theId);
+		
+		// to get all the rows from student table(Student obj)
+		// use hibernate query language
+		Query query = session.createQuery("from Student");
+		List<Student> students = query.getResultList();
+		
+	Hibernate and jdbc
+		when you save/do any opn using hibernate, hibernate uses hibernate api and does all low level sql work for u, internally it uses jdbc to do all its stuff
+	
+	
+	
+Inversion of Control(IOC)
+	Giving control to user rather than control taken by the class
+	ex:
+		public class ComplexAlgo{
+			BubbleSortAlgo bubble = new BubbleSortAlgo();
+		}
+		
+		public class ComplexAlgo{
+			@Autowired
+			private SortAlgo sortAlgo;
+		}
+		
+	In the above two examples we can see that in first class it is completely dependent upon only one BubbleSortAlgo. -> tightly coupled
+	In the second example we're not dependent upon any particular algo but we just use interface of SortAlgo and we use the 
+		algo which implements the SortAlgo. -> loosely coupled.
+	Inversion of Control, Dependency Injection allows us for loose coupling 
+	
+Thread Lifecycle
+	New:
+		Whenever a new thread is created, it is always in the new state. For a thread in the new state, 
+		the code has not been run yet and thus has not begun its execution.
+	Active:
+		When a thread invokes the start() method, it moves from the new state to the active state. 
+		The active state contains two states within it: one is runnable, and the other is running.
+		Runnable: A thread, that is ready to run is then moved to the runnable state.
+		Running: When the thread gets the CPU, it moves from the runnable to the running state. Generally, 
+		the most common change in the state of a thread is from runnable to running and again back to runnable.
+	Blocked or Waiting: 
+		Whenever a thread is inactive for a span of time (not permanently) then, 
+		either the thread is in the blocked state or is in the waiting state.
+	Timed Waiting: 
+		Sometimes, waiting for leads to starvation. For example, 
+		a thread (its name is A) has entered the critical section of a code and is not willing to leave that critical section.
+	Terminated: 
+		A thread reaches the termination state because of the following reasons:
+
+		When a thread has finished its job, then it exists or terminates normally.
+		Abnormal termination: It occurs when some unusual events such as an unhandled exception or segmentation fault.
+		
+	JPA Entity Manager:
+		The entity manager implements the API and encapsulates all of them within a single interface.
+		Entity manager is used to read, delete and write an entity.
+		An object referenced by an entity is managed by entity manager.
+		
+	Optional:
+		orElse -> default
+		orElseThrow -> throws ex
+		.of -> onl;y use when you know it if not null
+		.ofNullable -> use when you arenot sure whether it is notnull or null
+	Predicate:
+		static Predicate<String> pred = (t) -> t.startsWith("Ta");
+		List<String> list = Arrays.asList("Tarni", "Varun", "Varin", "String", "sb", "Tarun");
+//		list.stream().filter(pred).forEach(cons);
+	Consumer
+		static Consumer<String> cons = (t) -> System.out.println(t); 	
+		list.stream().sorted(Comparator.comparing(x -> x)).forEach(cons);
+		
+	Functional Interface
+		A functional interface is an interface that contains only one abstract method. They can have only one 
+		functionality to exhibit. From Java 8 onwards, lambda expressions can be used to represent the instance of a 
+		functional interface. A functional interface can have any number of default methods. Runnable, 
+		ActionListener, Comparable are some of the examples of functional interfaces. 
+		ex: consumer, predicate, supplier
+	
+	Method Ref
+		Java provides a new feature called method reference in Java 8. Method reference is 
+		used to refer method of functional interface. It is compact and easy form of lambda expression.
+		Each time when you are using lambda expression to just referring a method, you can replace your 
+		lambda expression with method reference.
+		
+	@RestController
+		Spring 4.0 introduced the @RestController annotation in order to simplify the creation of RESTful web services. 
+		It's a convenient annotation that combines @Controller and @ResponseBody, which eliminates the need to annotate 
+		every request handling method of the controller class with the @ResponseBody annotation.
+		
+	Entity Manager from Hibernate
+	
+	findAll
+		Query theQuery = entityManager.createQuery("from Employee", Employee.class);
+		
+		List<Employee> employees = theQuery.getResultList();
+		
+	save
+		Employee dbEmp = entityManager.merge(theEmployee);
+		theEmployee.setId(dbEmp.getId());
+		
+	findById
+		Employee theEmployee = entityManager.find(Employee.class, theId);
+		
+	delete
+		Query q = entityManager.createQuery("delete from Employee where id=:employeeId");
+		q.setParameter("employeeId", theId);
+		q.executeUpdate();
+		
+	What is @configuration used for?
+		One of the most important annotations in spring is @Configuration annotation which indicates that the class 
+		has @Bean definition methods. So Spring container can process the class and generate Spring Beans to be used 
+		in the application. This annotation is part of the spring core framework.
+			
+			
+	Spring Security
+		//@EnableWebSecurity
+		//@Configuration
+		//public class SecurityConfig extends WebSecurityConfigurerAdapter {
+		//
+		//    @Autowired
+		//    private CustomUserDetailsService userDetailsService;
+		//
+		//    @Override
+		//    public void configure(AuthenticationManagerBuilder auth) throws Exception{
+		//        auth.userDetailsService(userDetailsService);
+		//    }
+		//
+		//    @Bean
+		//    public PasswordEncoder passwordEncoder(){
+		//        return NoOpPasswordEncoder.getInstance();
+		//    }
+			
+			
+		//@Service
+		//public class CustomUserDetailsService implements UserDetailsService {
+		//
+		//    @Autowired
+		//    private UserRepository repository;
+		//
+		//    @Override
+		//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		//        User user = repository.findByUserName(username);
+		//        return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), new ArrayList<>());
+		//    }
+		//}
+	
+	JAXB
+		xml -> jaxb -> objects
+		
+		
+	Spring profiles
+		
+	
+	Comparator & Comparable
+		Comparable
+			1) Comparable provides a single sorting sequence. 
+			In other words, we can sort the collection on the basis of a single element such as id, name, and price.
+			2) Comparable affects the original class, i.e., the actual class is modified.
+			3) Comparable provides compareTo() method to sort elements.
+			4) Comparable is present in java.lang package.
+			5) We can sort the list elements of Comparable type by Collections.sort(List) method.
+		Comparator
+			1) The Comparator provides multiple sorting sequences. 
+			In other words, we can sort the collection on the basis of multiple 
+			elements such as id, name, and price etc.
+			2) Comparator doesn't affect the original class, i.e., the actual class is not modified.
+			3) Comparator provides compare() method to sort elements.
+			4) A Comparator is present in the java.util package.
+			5) We can sort the list elements of Comparator type by Collections.sort(List, Comparator) method.
+	
+	Spring Design patterns
+		Singleton
+		Factory method patterns
+		template
+		proxy
+		
+	How to get list of all bneans in your app
+		you can use /Beans url provided by actuator to get the list all beans
+		/env returns the list of all environment props of running the spring boot app
+	
+	
+	What is ORM 
+		Object Relational Mapping
+		technique of conencting jav objs to relationsla database
+		every operation need to be in obj format(save, update, delete, seelct)
+	
+	JPA:
+		It is one of ORM specification
+		it is java specification used to persist data between database and java objs
+	
+	Dependency Injection
+		Ex:
+			you've a laptop company, this company can't created all laptop components by itself, so it needs 
+			help from some screen manufacturers, RAM manufacturers.
+			So this company is dependent on them, it needs them by default to complete laptop functionality
+			here is where dependency injection comes into place. 
+			There should be some one who will give you this dependencies whenever you want them, it is spring ioc container
+			but how does it know that it should give the correct object
+			now comes place of config file or anno based spring boot
+			whenever you anno your class with stererotype annos, ioc container will by default create objs of them, adn give it to you
+			now to get those objs you must be doing something inside laptop class, which Autowired-> this will map 
+			your correct obj.
+			
+	Http status codes:
+		You search for anything on Google, and by this, a request is being sent to the server, then the server responds. 
+		This response is done using HTTP (HyperText Transfer Protocol) by the server. There can be two cases – 
+		the server may respond with the information it has, or else it may show an error with a code. Whenever there’s an 
+		error in the back end, the server responds with an error code that explains what error could have happened.
+		
+		 200  (Success/OK)
+		 201 (Created) 
+		 400 (Bad Request)
+		 401 (Unauthorized Error)
+		 403 (Forbidden)
+		 404 (Not Found)
+		 500 (Internal Server Error)
+
+	DispatcherSevlet:
+		In Spring Boot, the DispatcherServlet is a core component of the Spring Web MVC framework. It acts as the front controller in the MVC (Model-View-Controller) design pattern, which is a central point for handling HTTP requests in a Spring-based web application.
+
+		Routing Requests:
+			It receives all incoming HTTP requests to the application.
+			Based on the URL and the request mapping, it routes the request to the appropriate controller.
+		Request Handling:
+			It delegates the request to specific handler methods within controllers, which are annotated with @Controller or @RestController.
+			These handlers process the request and return a response, often in the form of a view or a JSON/XML response.
+		Exception Handling:
+			It manages exceptions thrown during request processing by delegating them to exception handlers, which can be defined globally or within controllers using @ControllerAdvice and @ExceptionHandler annotations.
+		Interception:
+			It supports interceptors (similar to filters) that can pre-process and post-process requests. These interceptors can handle tasks such as logging, authentication, and authorization.
+
+	How spring boot run() method works internally:
+		* creates applicaiton context, after loading all your properties from properties file
+		* registers all your beans into context
+		* kicks of embedded server to run your jar
+
+	What is CommandLineRunner:
+		interface, with abstract method run(), using this we can write some pre-processing logic,
+		which we want to run during the startup of our app, like db connection.
+
+	dif betwnee constructor and setter injection:
+		constructor:
+			mandatorily injects all your dependent beans
+			immutable in nature
+			cannot resolve circular dependency
+		setter:
+			optional injection
+			mutable, simply use setter mthod to change the ref whenever you want
+			can resolve circular dependency
+
+	Bean scopes:
+		Singelton: default only one instance created and stored in context
+		prototype: creates new instance whenever you request
+		Request: Creates new instance for each HTTP request
+		Session: Creates new session instance for each session(user/browser)
+		Application: Creates only one instance thru out the app, regardles of request/session
+		WebSocket: creates one instance for whole commn lifecycle.
+
+		What if you put prototype bean in singleton bean?
+			then scope of prototype will be lost, and it will behave as singleton
+			how to resolve?
+				instead of using Autowired, use getter and return context.getBean()
+				OR
+				use ObjectFactory/ @Lookup
+
+		spring singleton and plain singelton
+			spring singleton: per application context
+			plain singleton: Java design pattern , per JVM
+
+	BeanPostProcessor interface:
+		this is useful when we want to execute some pre and post logic to check if bean has correct values or not.
+	
+	Maintaining versionign for your api:
+		Allows backward compatibility
+		in the url: /books/v1
+		using headers: Api-version: v1/v2 
+
+	documentation for your rest api:
+		open-api (zero code)
+
+	consuming rest api:
+		resttemplate, webclient, feignclient
+
+	advanteages of feignclient:
+		enables loadbalancing
+		service discovery
+		just like calling method, no much code involved
+
+	how to hide some apis:
+		Security: Secure APIs using Spring Security, and only allow authenticated and authorized users to access them.
+		Endpoint Configuration: Configure endpoints to exclude them from Swagger or API documentation using @ApiOperation(		hidden = true) or @Hidden. 
+		Custom API Documentation: Create custom API documentation using tools like Spring Rest Docs or Asciidoctor, and exclude certain APIs from documentation.
+		Hide an API endpoint from Swagger using @Hidden: at method level
+		
+	AOP:
+		cross cutting concerns like logging, aditing, notification can be seperated from application
+		Class level: @Aspect
+		define pointcuts using @Pointcut anno at method level
+			@Pointcut("execution (* packagename(number of params)")
+			void point(){}
+		use pointcut method name in actual advices - @Before, @After, @AfterThrowing, @Around(mainly used to calc performance request-response time)
+			@After("point()")
+
+	diff kinds of advices in aop:
+		before advice
+		after advice
+		after returning advice
+		after throwing advice
+		around advice
+
+	Hibernate, Jpa, spring data jpa:
+		Hibernate: implementation of Jpa
+					an ORM for java obj to table vice-versa
+					caching/transaction
+		JPA:	specification, not an implementation
+				only defines some apis, and implementations like hibernate will provide implementations
+		spring data jpa: abstraction of JPA, also provides some additional functionalitites when compared to JPA
+					like custom queries at mthod level
+
+	Best practices while designing rest apis:
+		1. Versioning:
+			if you're updating response for an existing version without actually releasing as part of other release
+			then there are high chances that if someone is consuming and they've configured there code to the response that you're sending, and suddenly if you change the response body, then it will break their code
+			Can be mentioned as part or uri, request params, headers
+		2. Documentation:
+			Always document your rest apis will sample request and response, and what all schemas it will return along with satatus codes, use open-api
+		3. appropriate status codes:
+			don't return 302 for accetped/ok response
+		4. content negotiaiton:
+			also mention what you api accepts and produces like application/json or application/xml
+		5. error handling, like should accept only valid inputs, send appropriate error response which can be easily 			understood.
+		6. Secure your API if needed
+		7. if returning bunch of data, use filtering/sorting/pagination
+
+
+	Diff b/w controllerAdvice and RestControllerAdvice?:
+		@ControllerAdvice: Suitable for both web applications (view-based) and RESTful services. Can be used with 				@ResponseBody to return JSON/XML.
+		@RestControllerAdvice: Specifically designed for RESTful services, automatically assumes @ResponseBody for JSON/XML 	responses.					
+
+	Isolation levels in spring boot:
+		In Spring Boot, you can manage transaction isolation levels using the @Transactional annotation, which is part of the Spring Framework's transaction management support. Transaction isolation levels define the degree to which the transactions are isolated from each other, which helps in managing concurrency in database operations.
+
+		DEFAULT: This is the default isolation level of the underlying datastore. For most relational databases, this is usually READ_COMMITTED. It allows the database to manage the isolation level based on its default settings.
+
+		READ_UNCOMMITTED: This is the lowest isolation level and allows a transaction to read uncommitted changes made by other transactions. This can lead to dirty reads, non-repeatable reads, and phantom reads. It is rarely used because of its high risk of data inconsistency.
+		
+		READ_COMMITTED: This level allows a transaction to read only committed changes made by other transactions. It prevents dirty reads but still allows non-repeatable reads and phantom reads. It is the default isolation level for many relational databases like PostgreSQL and SQL Server.
+		
+		REPEATABLE_READ: This level ensures that if a transaction reads a row, subsequent reads within the same transaction will return the same data, even if other transactions modify the row. It prevents dirty reads and non-repeatable reads but can still allow phantom reads.
+		
+		SERIALIZABLE: This is the highest isolation level and ensures complete isolation from other transactions. It prevents dirty reads, non-repeatable reads, and phantom reads by forcing transactions to be executed sequentially. This can lead to reduced concurrency and throughput but ensures the highest level of data consistency.
+
+		@Service
+		public class MyService {
+
+		    @Transactional(isolation = Isolation.READ_UNCOMMITTED)
+		    public void performReadUncommittedOperation() {
+		        // method implementation
+		    }
+
+		    @Transactional(isolation = Isolation.READ_COMMITTED)
+		    public void performReadCommittedOperation() {
+		        // method implementation
+		    }
+
+		    @Transactional(isolation = Isolation.REPEATABLE_READ)
+		    public void performRepeatableReadOperation() {
+		        // method implementation
+		    }
+
+		    @Transactional(isolation = Isolation.SERIALIZABLE)
+		    public void performSerializableOperation() {
+		        // method implementation
+		    }
+		}
+
+	Java-8 memory management:
+		string deduplication: is same string, assign that one only, instead of creating onemore new instance
+		lamdba functions: absence of objects, increased memory utilisation
+		date time api: immutable
+
+	How to make path variable as optional:
+		1. @GetMapping({"/item/{id}", "/item"})
+    		public ResponseEntity<String> getItem(@PathVariable(value = "id", required = false) String id) 
+    	2. @GetMapping({"/item/{id}", "/item"})
+    		public ResponseEntity<String> getItem(@PathVariable Optional<String> id)
+
+    Stored procedures:
+    	Stored procedures are precompiled SQL statements stored in the database that can be executed by the database server. In Spring Boot, you can interact with stored procedures using several methods, such as the JdbcTemplate, SimpleJdbcCall, and JPA's @Procedure annotation.
+
+
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
+	

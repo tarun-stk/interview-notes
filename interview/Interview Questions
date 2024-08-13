@@ -1,0 +1,270 @@
+Interview Questions
+	can you change default tomcat server in sprin gboot
+		yes, you can change it to other server for ex: jetty and for this you also need to
+		add particular code in app.properties file
+	Hysterix
+		Microservice A calling Microservice B and Microservice B calling Microservice C
+		if C fails then B fails and also A fails
+		to overcome this problem we return default response if anything fails.
+	call start() method twice on same thread
+		you cannot call start() on same thread again, it results in illegalState exception.
+	is catch() necessary with try
+		no, you can have either finally and catch()
+		but you must have anyone of them
+		
+	multiple catch() blocks
+		yes, you can have more than one catch() with same try, but you have to catch
+		more specific exception first, and more generalized later
+		
+	finally and finalize()
+		finalize() is internally called by JVM while doing garbage collection
+		if you want to externally call finalize to do garbage collection yes you can do.
+		
+	methods of Object class in java
+		finalize()
+		toString()
+		clone()
+		hashCode()
+		equals(Object obj)
+		getClass()
+		wait() notify() notifyAll() -> used in multithreading
+		
+	SOLID oops concepts
+		S - Single-responsiblity Principle ->A class should have one and only one reason to 
+			change, meaning that a class should have only one job.
+		O - Open-closed Principle -> Objects or entities should be open for extension but 
+			closed for modification. 
+		L - Liskov Substitution Principle -> Let q(x) be a property provable about objects of x 
+			of type T. Then q(y) should be provable for objects y of type S where S 
+			is a subtype of T.
+		I - Interface Segregation Principle -> A client should never be forced to implement 
+			an interface that it doesn’t use, or clients shouldn’t be forced to depend 
+			on methods they do not use.
+		D - Dependency Inversion Principle -> Entities must depend on abstractions, not on 
+			concretions. It states that the high-level module must not depend on the 
+			low-level module, but they should depend on abstractions.
+			
+	StringBuffer and StringBuilder
+		both are mutable
+		buffer -> thread safe, slow, released in jdk 1
+		builder -> not thread safe, fast, released in jdk 1.5
+	
+	create immutable class in java
+		final class
+		private & final data members
+		no setters
+		public constructor
+		Make defensive copies: When accepting mutable objects (like arrays or collections) as constructor arguments, make 		defensive copies to prevent external modifications.
+			public ImmutableClass(int[] arr) {
+			    this.arr = Arrays.copyOf(arr, arr.length);
+			}
+		only getters, that too will return copy instance, instead of original
+		static getInstance method _-> to create and return the created objecrt
+			ex: if(obj == null)
+					obj = new obj();
+				return obj;
+		
+	Serialization
+		Serialization in Java refers to the process of converting an object's state (i.e., its data) into a byte stream so that it can be easily stored in a file, sent over a network, or otherwise persisted. The reverse process, which involves recreating an object from the serialized byte stream, is called deserialization. Serialization is primarily used for data persistence and object communication.
+	
+	
+	Bean lifeCycle
+		init @PostConstruct
+		destroy @PreDestroy
+	
+	Transaction Management in spring
+	
+	
+	JIT
+		java in time compiler
+			it increases the efficiency of the interpreter by compiling bytecode at runtime
+			JIT compiles code to machine level directly for higher speeds of execution
+			
+	why java platform independent
+		java compiler converts java code to bytecode which makes it platform independent
+		
+	classloader
+		loads class files when program is executed, classloader is the first one to load
+		the executable file
+	
+	memory allocations in java
+		heap memory
+		stack memory
+		class memory
+		etc.
+	
+	copy constructor
+		a constructor that initializes an obj through other obj of the same class
+	
+	marker interface
+		with no methods
+		to give permissions
+		eg: serializable, cloneable.
+		
+	JDK
+		java development kit
+			it is combined package of jre and development tool sused for designing java apps
+	
+	JRE
+		it is combination of JVM and libraries set.
+		
+	JVM	
+		it provides environment to run java programs. but to run it needs some libs
+		which are provided by JRE.
+	
+	Access specifiers
+		public -> can be accessed ouit of package
+		private -> only inside cklass
+		protected -> to access this you must extend the class which has protected methods.
+		default -> same like public, but accessible only inside package.
+		
+	can constructor return value
+		cannot have return type, but by default it always returns the instance.
+	
+	overload static method
+		no, java not supports static overloading, process would throe an error reading
+		static method cannot be references
+	
+	Dynamic method dispatch / late binding
+		process where the method call is executed during run-time, the overriden mehtod is called
+		through a ref variable of super class, this process is also called run-time polymorphism.
+		
+	why Generics are used in java
+		compile-time type safety is provided by using generics. this allows user to catch unnecessary
+		invalid types at compule time. this allows programmers specify a single mthod decleration 
+		a set of related types.
+	
+	externalizable interface.
+		helps with control over the process of serialization. an externalisable interface
+		incorporates readExternal and writeExternal methods.
+	
+	Serialisation
+		process of sending java code to one sustem to other sustem,'
+	
+	enum
+		is an interface in java. enum allows the sequential access of elements stored in a collection
+		in java
+	
+	java dynamic in nature
+	
+	how many times finalize method is called
+		is called by grabage collectpr for evry obj, the grabage collector calls the finalize() 
+		method just for one time
+	
+	Spring framework
+		spring is essentially defined as an app framework and inversion of control container for java.
+		basically cheif purpoese of the spring framework is to create enterprise app in java.
+		also it is especially useful to keep in mind that the central features of spring framework are
+		essentially conductive to any java app.
+		
+	Wrapper class
+		it is used to convert primitive into obj and obj to primitive.
+		autoboxing and auto-unboxing allows us to conversion of obj to prim and vice-versa
+	
+	Different ways of creating thread, and what are the differences
+		1. by extending thread class
+			it has many methods like, sleep, run
+		2. by implementing runnable interface 
+			it has only one method namely run().
+			
+	Thread
+		A thread is a lightweight sub-process, the smallest unit of processing. 
+		Multiprocessing and multithreading, both are used to achieve multitasking.
+		
+	MultiThreading
+		Multithreading in Java is a process of executing multiple threads simultaneously.
+		
+	runtime polymorphism
+		poly -> many
+		phism -> forms
+		in java we have two kinds of polymorphism
+		1. compile time		
+			method overloading -> compiler decides at compile time only to call which method.
+		2. runtime 
+			method overriding -> which method will be called will be decided during runtime
+				eg: inheritence 
+				
+	Interface
+		An interface in Java is a blueprint of a class. It has static constants and 
+		abstract methods.
+		The interface in Java is a mechanism to achieve abstraction. 
+		There can be only abstract methods in the Java interface, not method body. 
+		It is used to achieve abstraction and multiple inheritance in Java.
+		In other words, you can say that interfaces can have abstract methods and variables. 
+		It cannot have a method body.
+		Java Interface also represents the IS-A relationship.
+	
+	Difference between hibernate and JPA
+		JPA:
+			JPA is a specification and defines the way to manage relational database data using 
+			java objects.
+			JPA uses EntityManager interface to create/read/delete operation and maintains 
+			the persistence context.
+			JPA uses JPQL (Java Persistence Query Language) as Object Oriented Query language 
+			for database operations.
+			JPA uses javax.persistence package.
+				
+		Hibernate:
+			Hibernate is an implementation of JPA. It is an ORM tool to persist java objects into 
+			the relational databases.
+			Hibernate uses Session interface to create/read/delete operation and maintains the 
+			persistence context.
+			Hibernate uses HQL (Hibernate Query Language) as Object Oriented Query language for 
+			database operations.
+			Hibernate uses org.hibernate package.
+			
+	Difference between spring data jdbc and spring data jpa
+		In Spring Data JPA, repositories allow us to use derived methods instead of queries. 
+		Such methods transparently convert their invocations to queries using a JPA 
+		implementation. In Spring Data JDBC, method invocations are transformed into pure 
+		SQL and executed via JDBC.
+		
+	Vector and ArrayList:
+		Vector:
+			it increases it's size by 100% (x2)
+			synchronized: thread safe, slow
+		ArrayList:
+			it increases size by 50% (x1.5)
+			not synchronized: thread unsafe, fast
+			
+		ArrayList is preferred as it is memory efficient.
+	
+	Web Socket vs REST
+		Web Socket:
+			it is stateful
+			stores the information, and maintains relationship between calls
+			need only TCP connection once
+		REST:
+			it is stateless
+			it means it doesn't store any inf, client must send all the details in request
+			follow request response model
+			need TCP connection for every call
+			it is light weight
+		
+	Synchronous calls and asynchronous calls between microservices
+		Assume one microservice calls different microservices
+		Synchronous:
+			each microservice, call will be executed synchronously, means to call one microservice
+			it must complete the call to its previous microservice
+			one disadvantage:
+				there may be situation where second microservice call doesn't have anything
+				to do with first microservice call which wil lead to time waste.
+			this is widely used.
+				
+		Asynchronous:
+			microservice calls can be done in asynchronous way, each can trigger without 
+			actually depending upon the response received from perv mc call
+			which overcomes the disadvantage from synchronous call.
+
+
+
+
+
+
+
+
+
+
+
+
+		

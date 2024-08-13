@@ -1,0 +1,88 @@
+MAVEN
+	Maven is build tool given by apache org
+	it is used to automate application process
+	It provides archetypes for project creation
+	archetype represents type of project
+	maven provides more than 1500 archetypes
+	web - archetype: standalone application
+	quick-start-archetype: maven standalone app
+	pom(maven config file) -> project object model, stores all dependencies, maven won;t work without this file
+	
+	Maven Repositories
+		(apache)Central repositories --> maintained by apache
+		(company specific)remote repositories --> maintained by private companies
+		(system specific)local repositories --> if we use maven, in our local machine maven repo will be created that is local repo
+		--> if the dependency not avaiable in local then maven will download from central and then add to local and then add to project(build path)
+		
+		how to work with remote repo? -> evry company will maintain their own repo for app devment
+		how to add settings.xml file in our ide? -> window->preferences->maven->user settings -> select settings.xml->apply
+		to work with remote repo company will provide settings.xml file, we should add that setttings.xml in our ide.
+		Repository is place where we store jars required for apps
+		
+		Maven project structure:
+			src/main/java - business logic
+			src/test/java - unit tests for business logic
+			target - contains all the .java classes which are compiled -> compiling java classes will generate .java files in target folder
+			pom.xml - configureation file for maven project -> must be present for maven project.
+			maven dependencies - all the dependencies 
+		
+	Maven Goals:
+		Maven software is a collection of plugins
+		goals:
+			clean --> it will delete target folder in proj
+			compile --> it will compile source code
+			test --> it will execute junits available in proj
+			package --> it will package application(jar or war)
+			install --> it will install project in local repo, when you want to use one project as a dependency to other project then u will use install goal to install the project.
+			
+			jar -> standalone projs, jar is collection of .class files, if you want to use some class u must add that jar file which contains the particular class (ex: DispatcherServlet class)
+			war -> web projects
+			
+			
+		What is maven exclusion:
+			Transitive dependency management:
+				the process of downloading all the related jar files for single dependency.
+				if Transitive dependency management was not there we would have to add all the related dependencies to our pom
+				which will increase pom xml code.
+				Disadvantage:
+					memory problem, unnecessary download of jar files which are not useful for the app(memory problem will arise in JVM meta space).
+				The solution-> maven exlusion.
+					add below tags inside the dependencies tags of pom file and mention the required groupId and artifactId.
+					add <exlusion><exclusiong><groupId></groupId><artifactId></artifactId></exclusion></exlusion>
+					now the additional jar files which were downloaded as part of transitive dependency management will be removed.
+				To remove child dependencies from the project we can use exclusions -> Maven exclusion.
+				Solution: Be careful while adding dependencies to the pom and have a look at maven dependencies immediately what are being added, and remove which are not reqd(Devs job)
+				
+			Maven multimodule:
+				when you have multiple modules u go for maven multimodule project.
+				create a project with pom as packaging structure.
+				then right click on the project and create a maven multi module project which will create a child
+				each child and parent has it's own pom files, you can see who's the child in parent pom and who is parent in child pom
+				this maven multimodule is used cause it is easy to manage.
+				now a days we're not using these approach, we're directly going for microservices architecture.
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+	

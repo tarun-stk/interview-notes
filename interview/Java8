@@ -1,0 +1,70 @@
+https://www.interviewbit.com/java-8-interview-questions/
+https://blog.devgenius.io/java-8-coding-and-programming-interview-questions-and-answers-62512c44f062
+
+Java 8 features:
+	Lambda expression
+		lambda expression can be applied on functional interface
+	Functional interface
+		interface which has only one abstract method and multiple static or default methods
+		ex: Runnable - run()
+			Callable - call()
+			Comparable - compareTo()
+			Comparator - compare()
+			
+			
+
+Java 8:
+	Functional Interface
+		Interface which contains only one abstract method but can have multiple default and static method 
+			ex: Runnable -> run(), 
+				Callable -> call(),
+				Comparable -> compareTo()
+				Comparator -> compare()
+				Consumer -> accept()
+				Predicate -> test()
+				Supplier -> get()
+				Function -> apply()
+		
+		can you extend other functional interface(f2) in a functional interface(f1)
+			Yes, you can do that but, when you do that f1 will no longer act as functional interface, because there will be 
+			2 abstract methods
+				
+	Streams:
+		Advantages:
+			Functional programming using functional interfaces
+			better performance
+			short code
+			
+	find count of each char in a given string
+		return s.codePoints().mapToObj(x -> (char)x).collect(Collectors.groupingBy(x->x, Collectors.counting()));
+		
+	find duplicate characters from a given string 
+		Map<Character, Long> collect = s.codePoints().mapToObj(c  -> (char)c).collect(Collectors.groupingBy(c -> c, Collectors.counting()));
+		Set<Character> set = collect.keySet();
+		Stream<Character> stream = set.stream().filter(x -> collect.get(x) > 1);
+		return stream.collect(Collectors.toList());
+		
+	find all unique characters in a given string
+		return s.codePoints().mapToObj(c  -> (char)c).collect(Collectors.groupingBy(c -> c, Collectors.counting()))
+		.entrySet().stream()
+		.filter(x -> x.getValue() == 1)
+		.map(Map.Entry::getKey)
+		.collect(Collectors.toList());
+		
+	find first non-repetitive element
+		"java is awesome" -> j is first non-repetitive element
+		Map<Character, Long> collect = s.codePoints().mapToObj(c  -> (char)c).collect(Collectors.groupingBy(c -> c, LinkedHashMap::new, Collectors.counting()));
+		Set<Character> set = collect.keySet();
+		Stream<Character> stream = set.stream().filter(x -> collect.get(x) == 1);
+		return stream.findFirst().get();
+		
+	find second highest number from a given array
+		return Arrays.stream(arr).boxed().sorted(Comparator.reverseOrder()).skip(1).findFirst().get();
+	
+	find longest string from array of strings
+		return Arrays.stream(strArr).reduce((s1, s2) -> s2.length() > s1.length()? s2: s1).get();
+		
+	find all elements who starts with 1
+		return Arrays.stream(arr).boxed().map(s -> s+"").filter(s -> s.startsWith("1")).collect(Collectors.toList());
+		
+	

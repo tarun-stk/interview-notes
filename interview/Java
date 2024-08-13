@@ -1,0 +1,359 @@
+Java
+
+ASCII : American Standard Code for Information Interchange
+
+Labeled break : 
+	break; //Unlabeled break
+	labelName: {}
+		break labelName; // Labeled Break
+		
+Enhanced ForLoop:
+	for(int i : arrayName) // All the elements from arrayName will be stored into i with every iteration
+	
+Varargs:
+	In case we don't know how many values the user will be sending in that case we use varargs
+	methodName(int ... variableName) //Varargs - Variable length arguments
+	
+Encapsulation: 
+	give private keyword to all the instance variables
+	use getters and setters to access and change the variable values
+
+Polymorphism:
+	poly - many, morphism: behaviour
+	Existing in many forms
+	can happen in two ways
+	(i) Method Overloading
+	(ii) Method overriding
+	
+Marker Interface:
+	interface with no method declerations
+	interface interfaceName{}
+	Mainly used to grant permisions
+	
+Functional Interface:
+	contains only one abstract method with any number of default and static methods
+	
+String Buffer and String Builder:
+	used for string mutability
+	String buffer is thread safe
+	
+Collections:
+	collection - concept
+	Collection - interface -> An API
+	Collections - class
+	
+	Collection -> List -> ArrayList
+	
+	List<WrapperClass>: duplicates allowed -> ordered sequence
+	Set<WrapperClass>: Unique elements allowed -> random sequence
+	Map<K, V>: key value pairs 
+	
+	List:
+		ArrayList: Internally follows arrays, manipulating(inserting, deleting) is a expensive operation as it involves
+		in shifting elements.
+		eg: ArrayList -> access, LinkedList -> manipulation, insertion.
+		LinkedList: follows double linked list, insertion and deletion is easy, go for this if
+		manipulation is priority.
+		Follows indexing pattern.
+		Collecitons.sort(list) -> to sort elements.
+	Set:
+		Follows hashcode concept, internally uses map concept to add an element to the set.
+		doesn't allow duplicates.
+		doesn't follow indexing
+		insertion order not maintained (except LinkedHashSet)
+		Use TreeMap for storing in sorted order.
+		eg: HashSet, LinkedHashSet, TreeSet.
+		convert list to set:
+			list.stream().collect(Collectors.toSet())
+		Can set allow duplcates?
+			Ans: Yes, in some scenarios
+			it doesn't allow duplicates in case of primitives.
+			But it does allow duplicates in case of customized onbjects.
+			like
+			Set<CustomObject> set = new HashSet();
+			CustomObject c1 = new CustomObject(1, "c1");
+			CustomObject c2 = new CustomObject(1, "c1");
+			set.add(c1);
+			set.add(c2);
+			it will add both even after the data is same.
+			In this case we've override HashCode and Equals method so that we don't add duplicates.
+		
+	Map:
+		key, value pair.
+		no duplicate keys.
+		hascode concept.
+		HashMap, LinkedHashMap, TreeMap.
+		LinkedHashMap -> maintains insertion order.
+		TreeMap -> sorted elements on basis of keys.
+		HashMap -> not synchronized, not thread safe, fast, Throws ConcurrentModificationException while
+			changing data while iteration (FailFast)
+		ConcurrentHashMap -> Synchronized(thread safe, not fast) won't allow null values or keys,
+		ConcurrentHashMap -> FailSafe, means can modify collection during iteration.
+		
+	QA:
+		what is the difference b/w 
+		ArrayList<Integer> list = new ArrayList();
+		&
+		List<Integer> list = new ArrayList();
+		
+		ArrayList<Integer> list = new ArrayList(); -> using directly implementation class	
+			tightly coupled, we can't change implementation in the future.
+		List<Integer> list = new ArrayList(); -> using parent as instance to instantiate child
+			loosely coupled, we can change implementaion class at nay time like shown below.
+			List<Integer> list = new LinkedList();
+		
+		
+	Access modifiers
+		Keywords that can be used with class:
+			public, abstract, final (only these three)
+			u can use private only with inner class
+		public classes:
+			can be accessed outside package
+		default classes:
+			cannot accessed outside the package.
+			can only be accessed in a particular package
+			
+		private: specific class
+		default: specific package
+		public: any class of package
+		protected: subsiding class (if class a has protected method, then to access that method, you must extend that particular class).
+		
+		
+	
+Streams:
+	stream is an API
+	introduced in java 8.0
+	
+Java Interview questions
+	
+	Exceptions
+		CHecked:	
+			the exceptions which are checked at the compile time itself, compiler gives an error saying you must handle this exceptions
+			using try/catch or using throws decleration
+			
+		Unchecked:
+			these exceptions are not checked at the compile time, and will cause the program to stop abruptly during the runtime
+			ex: ArrayIndexOutOfBounds, ArithmeticException
+			
+		Exception HAndling in Spring
+			We've have @ControllerAdvice class which will be called whenever an exception being triggered in the program.
+			In which we have multiple methods to handle diff kind of exceptions.
+			methods are annotated with @ExceptionHandler 
+			ex:
+			@ControllerAdvice
+			public class ApplicationExceptionHanlder {
+				
+				@ExceptionHandler
+				public ResponseEntity<?> handleEmployeeNotFoundException(EmployeeNotFoundException ex){
+					Map<String, Object> errorBody = new LinkedHashMap<>();
+					errorBody.put("error", "Employee Not Found in the Database");
+					errorBody.put("timestamp", LocalDateTime.now());
+					errorBody.put("details", ex.getMessage());
+					
+					return new ResponseEntity<>(errorBody, HttpStatus.BAD_REQUEST);
+				}
+			}
+			
+			The exception class:
+			public class EmployeeNotFoundException extends RuntimeException{
+				public EmployeeNotFoundException(String message) {
+					super(message);
+				}
+			}
+			
+			
+	All types of collections
+		List:
+			ArrayList
+			LinkedList
+		Set:
+			HashSet
+			TreeSet
+			LinkedHashSet
+		Map:
+			HashMap
+			LinkedHashMap
+			TreeMap
+		
+		will putting final keyword while declaring a list allow to modify it?
+			final List<String> l = new ArrayList<>();
+			l.add("Tarun");
+			l.add("Varun"); --> no issue to modify the list
+			l = new ArrayList<>() --> but it will give compile error when trying to reassign.
+			if you want to use unmodifiable list, then use Collections.unmodifiableList()
+			
+		Difference between concurrentHashMap and HashMap
+			HashMap:
+				not synchrnozied
+				not thread save
+				fail-fast and throws an exception during iteration
+				it allows of storign null keys and cvalues
+				faster
+			ConcurrentHashMap:
+				synchronized
+				thread safe
+				it is fail-safe and performs iteration of multiple threads
+				it does not allow null keys/values
+				slower than hashmap
+
+	Why main method in java in public and static:
+		public because, JRE can access this method outside of the class.
+		static becuase we can call methods of a class either using objects or if a method is marked as static
+		then using class name we can call it, so to access a method w/o object we must declare it with static.
+
+	Singleton:
+		What: a class with only one instance, like a shared resource, room only with one keys
+		how: private constructor, static getInstance method, static instanmce variable
+		why: resource sharing like db connection, global acces like logger, reduces memory and improves performance
+		cons: difficult to write unit tests, tight coupling (forced to use single instance)
+
+	Java 11 specific features:
+		var keyword: don't require type declerations
+		HttpClint: replaced old HttpURLConnection and handles more efficient way to handle HTTP requests
+		various other security and performance improvements.
+
+	Garbage Collection:
+		Garbage Collection (GC) in Java is a mechanism that automatically manages memory allocation and deallocation 
+		for Java programs. It's a key feature that helps prevent memory leaks and reduces the risk of dangling pointers.
+		When objects are no longer referenced/used they become eligible for garbage collection
+		garbage collector runs periodically to free up resources, making it available for future use
+		- Improved Productivity: Focus on writing code instead of managing memory.
+		Reduced Memory Management: Developers don't need to manually manage memory allocation and deallocation.
+		The JVM uses various garbage collection algorithms and techniques, such as:
+		- Mark-and-Sweep: Identifies live objects and marks them, then sweeps away unmarked objects.
+		- Generational Garbage Collection: Divides the heap into generations based on object lifetimes, reducing GC overhead.
+		- Concurrent Garbage Collection: Runs GC in parallel with the application, reducing pause times.
+
+	Memory leaks in Java are still possible even with garbage collection due to several reasons:
+		Static Variables: Static variables are not eligible for garbage collection, so if they hold references to objects, 
+		those objects won't be collected.
+
+	finalize():
+		In Java, the finalize() method is a special method that is called by the garbage collector before an object is 
+		destroyed. It's a chance for the object to perform any necessary cleanup, like closing files, releasing resources, 
+		or freeing memory.
+		1. Called by the garbage collector: The JVM calls finalize() on an object just before it's about to be garbage collected.
+		2. Only called once: finalize() is called only once, even if the object is eligible for garbage collection multiple times.
+		3. Not guaranteed to be called: There's no guarantee that finalize() will be called, since the JVM may crash or exit 
+			before the object is collected.
+
+	How will you maintain quality and maintainability of your code quality:
+		I frequently do code reviews with my team mates, write unit tests to capture any new bug after code changes
+		Use some automated tools to capture code smells and bugs.
+
+	How will deal with when your project runs in good in dev env, but slow in prod/other env:
+		I'll first try to understand the internal state of the system by looking at logs, metrics.
+		ALso see if any dependent service(like db, sync and async communications) is causing slowness.
+
+	 How will you sync hashmap:
+	 	1. Collections.synchronizedMap():
+			Map<String, Object> syncMap = Collections.synchronizedMap(new HashMap<>());
+			This method wraps the HashMap with a synchronized view, making it thread-safe.
+		1. ConcurrentHashMap:
+			Map<String, Object> concurrentMap = new ConcurrentHashMap<>();
+			ConcurrentHashMap is a thread-safe implementation of HashMap, designed for concurrent access.
+		1. Synchronized block:
+			Map<String, Object> map = new HashMap<>();
+			synchronized (map) {
+			    // Access the map
+			}
+			Synchronizing the block of code that accesses the map using the map object as a lock.
+
+	OOPS and features:
+		OOPS (Object-Oriented Programming System) is a programming paradigm that revolves around the concept of objects and 
+		classes. It's a way of designing reusable and maintainable code.
+		3. Inheritance:
+		    - Inheritance allows a child class to inherit properties and methods from a parent class.
+		    - Child classes can also add new properties and methods or override those inherited from the parent.
+		4. Polymorphism:
+		    - Polymorphism means "many forms."
+		    - Methods or functions can take on multiple forms, depending on the context or type of object.
+		    - Examples: method overloading, method overriding, operator overloading.
+		5. Encapsulation:
+		    - Encapsulation hides the implementation details of an object from the outside world.
+		    - Objects expose only necessary information through public methods, keeping internal details private.
+		6. Abstraction:
+		    - Abstraction shows only essential features and hides non-essential details.
+		    - Abstract classes or interfaces define a blueprint without providing a complete implementation.
+		7. Composition:
+		    - Composition allows objects to contain other objects or collections of objects.
+		    - Objects can be composed of smaller objects, enabling a hierarchical representation.
+
+	Wait and notify;
+		wait releases lock, sleep will not release lock.
+		waiting thread can come to running state due to spurious wake up, even when notify not called.
+
+	Cyclic dependency & how to resolve them:
+		when one bean A requires B, and B requires A it causes Cyclic dependency.
+		to resolve:
+			1. carefully rethink your design
+			2. Use a third bean which return both beans
+			3. Use setter injection, instead of using constructor/field level injection
+			4, Use @Lazy which creates proxy, and creates original instance only when first needed
+
+	How do you extract only unique from a json response:
+		// Assume 'jsonResponse' is a string containing the JSON response
+		JSONObject obj = new JSONObject(jsonResponse);
+		Set<String> uniqueKeys = new HashSet<>();
+
+		Iterator<String> keys = obj.keys();
+		while (keys.hasNext()) {
+		    String key = keys.next();
+		    uniqueKeys.add(key);
+		} 
+
+	Method Hiding in java:
+		- Method hiding occurs when a subclass defines a static method with the same signature as a superclass method.
+		- When calling a static method on an object of the superclass type, the superclass method is called, 
+			not the subclass method.
+				SuperClass obj = new SubClass();
+				And you call the static method on the object, like this:
+				obj.staticMethod();
+				The method that will be called is the one defined in the superclass (SuperClass). This is because static 
+				methods are bound at compile-time, and the compiler resolves the method call based on the declared type 
+				of the object, which is the superclass.
+		- To call the subclass method, use the subclass type explicitly or call the method directly using the subclass name.
+			SubClass obj = new SubClass();
+			obj.staticMethod(); // Calls the subclass method
+			Or, you can use the subclass name to call the static method directly:
+			SubClass.staticMethod(); // Calls the subclass method
+
+	How to make an object eligible for garbage collection:
+		1. nullify the reference.
+		2. remove circular ref(A -> b, B-> A) break these cycles
+		3. Remove objects from collections (list/set)
+		4. Manually call System.gc() -> although not guaranteed that it will be immediately garbage collected.
+
+	How to make an object so that it will never be garbage collected:
+		1. store its ref in static variable.
+		2. store its ref in global variable
+
+	Inter thread commmn:
+		wait() - current thread will wait until some duration or until other thread invokes notify() or notifyAll() method
+		why wait, notify and notifyAll are present in Object rather than in Thread:
+			above three methods belong to locking and locking is as per object in java, so those are present in Object class.
+
+	Why string is not preferred to store passwords:
+		strings are immutable & stored in string pool for reusability, these are stored for long periods of time in mempry 
+		for reusability, until or unless gc collects it
+		who has access to memory dump can easily read password in plain text 
+
+	Exception hierarchy:
+
+												Object
+													|
+												Throwable
+									Error 											Exception
+				These can happen for various reasons					RuntimeException				(everyone 2wards ryt are checked)SQLException  IOException
+				and we cannot do anything								NullPointerException					
+																		ArrayIndexOutOfBoundsException
+																		ArithmeticException
+																		(above all are Unchecked)
+
+
+
+
+		
+
+			
+			

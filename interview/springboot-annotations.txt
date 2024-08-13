@@ -1,0 +1,99 @@
+Spring annotations
+	@SpringBootApplication
+		@ComponentScan
+		@EnableAutoConfiguration
+		@Configuration
+		
+	Stereotype Annotations
+		@Component - base stereotype annotation
+		@Service
+		@RestController/@Controller
+		@Repository
+		-whenever you annotate class with these annotations spring will automatically creates spring bean in app context
+		& spring will manage its bean lifecycle from creation to destroy
+		-other 3 annotations are derived from component annotation
+		
+	Spring Core annotations
+		@EnableAutoConfiguration:
+			The @EnableAutoConfiguration annotation in Spring Boot is a key component that drives the auto-configuration feature. This annotation tells Spring Boot to automatically configure your application based on the dependencies and configurations present in your project.
+			Automatic Configuration:
+				It enables Spring Boot’s auto-configuration mechanism, which attempts to automatically configure your Spring application based on the jars and classes available in the classpath.
+				For instance, if spring-boot-starter-web is on the classpath, Spring Boot will automatically configure web-related components such as a DispatcherServlet, a web server, and other web infrastructure components.
+			Conditional Configuration:
+				The auto-configuration works by using various @Conditional annotations to make decisions. For example, it only configures a JdbcTemplate bean if a DataSource bean is present.
+		@Configuration
+			When a class is declared with this annotation, then this class can be used 
+			by spring ioc container as a source of bean definition  
+		@Bean
+			generally configuration and bean are used at same point i.e configuration at class level
+			and bean at method level, when you want to create a obj of class that is not annotated with any 
+			of the stereotype annotations, then if you want to manage it's lifecyle by spring ioc
+			then you create a method in config class with @Bean annotation this will create and manage the objs
+			lifecycle by spring ioc
+		@Autowired (search by type)
+			when we use this anno, spring will automatically create an object of implementing class
+			if more than one implementing class found, then we need to use qualifier anno
+		@Qualifier (search by name) -> field level
+		@Primary -> class level
+			When you have two implementing classes for same interface, but you always want to use only one 
+			implementing class(then you can mark this class as primary), in this case you also don't need to anno with qualifier.
+		@Lazy -> class level
+			By default spring boot creates objects if you used any of the stereotype annos
+			no matter what if you want it or not
+			if you want obj only on demand then u can annotate that particular class with @Lazy
+			then spring boot won't create on launch, but will create only if you're actually working with that bean
+		@Value -> field level anno
+			If you want some metadata, then you can initialize that data in properties file
+			and you can read those values using @Value anno
+			@Value("{host.name}")
+		@PropertySource -> class level anno
+			spring boot loads values form app.properties by default
+			but if you have any values in custom properties file then you can this anno
+			@PropertySource("classPath:custom.properties")
+		@ConfigurationProperties
+			if you have some data in properties file and each key starts with some 
+			unique value, then you can use this anno
+			ex:
+				@Component
+				@ConfigurationProperties(prefix= "mail")
+				class MailProps{
+					int from;
+					int to;
+					//getter, setters & toString
+				}
+				in custom.properties file
+					mail.to="tarun@hotmail.com"
+					mail.from="google.hr@google.com"
+				then by defaul this values will be assigned to attributes in the MailProps class
+		@Profile	
+			used when you're having multiple db configs for dev, prod, stage etc.,
+			using this anno you can easily switch from one props to other props file
+		@Scope
+			this is about bean scopes
+			singleton -> creates only one bean no matter what
+			prototype -> creates new obj whenever a request is made, and it won't create default bean on launch
+	
+	Rest API related annos
+		@RestController
+		@RequestMapping
+		@GetMapping
+		@PostMapping
+		@PutMapping
+		@PatchMapping -> to partially update an entity, eg: only some fields but not whole entity
+		@DeleteMapping
+		@RequestBody
+		@PathVariable 
+			If you use this anno, then you must give value in the url, else you'll get 404 exception
+		@RequestParam
+			If you use this anno, and don't send any value in the url, it won;t throw any exception
+		@ControllerAdvice
+		@ExceptionHandler
+		
+	Spring Data Jpa annos
+		@Entity
+		@Table
+		@Column
+		@Transactional -> method level
+			if you've any case where if something goes wrong, then you don;t have to save that rec.
+			in that case u can use this anno, and this will do the same
+			

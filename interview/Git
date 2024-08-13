@@ -1,0 +1,124 @@
+Git
+	version contorl software(tool)
+	
+	git Hub
+		a leading cloud platform where we can stroe our project
+		is implemented in ruby and is under microsoft
+		usign git hub we can maintain repositories in cloud platform
+		to connect to git hub we need one client software
+		we use git as one of the clinet
+		there are many client sws like git, gitlab, source tree
+		
+	Git
+		is a client software which allows to communicate with github
+		create a repo in github
+		create a folder in your pc
+		then open git command prompt from there
+		do git clone with the repo url (git clone url)
+		
+	Git commands:
+		git init --> initialize git make this folder as git folder
+		git add --> add all the untracked files to the git
+		git add --a --> to add all modified files at a time
+		git branch -M main
+		git remote add origin url(github repo url)
+		git commit -m "" --> do a commit with an optional message. commit to local repo, to commit staged files to local repo
+		git push filename --> pushes the file filename to the repo. FROM LOCAL TO CENTRAL
+		git log --> gives all the logs (all the commit history)
+		git stash  --> save changes in temp location and make working dierctory clean
+		git stash apply --> applying stashed changes to local repo back(get back what you've stashed before)
+		git diff filename --> show the difference in the file content from your local to what's commited.
+		git status --> gives the status of your local repo(to see staged, unstaged and untracked files)
+		git clone -> to clone project from central repo to local system
+			staged: eligible for commit
+			unstaged: modified but not eligible for commit
+			untracked: newly created files.
+		git pull --> to take latest changes from central repo to local repo
+		git checkout <filename> --> to replace local file with central repo file
+		git clone -b <branchname> <repourl>  --> to clone specific branch.
+		git log --patch -1  -> shows you 1 number of logs
+		git restore --staged <filename>  -> this will bring back file from staged state to modified state
+		git restore <filename>  -> this will bring file to its original state as of in remote repo
+		git checkout <branchname>  -> to switch from prev branch to branchname
+		git log --oneline --decorate  -> shows where head is pointing currently, also all branches. -a list of snapshots(chnges)
+		git push origin <branchname> -> pushes to that particular branch
+		git merge <branchname> --> merges both current branch and branchname into current branch
+		 
+		TO MERGE Branch   --> adds changes in source branch to target branch.
+		git checkout targetbranch
+		git pull
+		git merge sourcebranch
+		
+		
+		
+	How to push the existing project to the github
+		git init -> inside proj filder
+		git status --> check status
+		git add --a --> add all the files
+		git commit -m "initial commit"
+		git branch -M main --> 
+		git remote add origin <repo url> --> in config file you can see the repo got added with url
+		git push -u origin main --> it will prompt for username and password
+		
+	Branch
+		branches are used to maintian multiple code bases in repository
+		to perform parallel development we use branches
+		in evry project we will see below branches
+			master
+			development
+			feature
+			qa
+			uat
+			release
+		Pull Request mneans merging one branch to other branch
+		you can create multiple branches in single repo
+		to clone specific branch we've to clone that branch using below commadn
+		git clone -b <branchname> <repourl>
+		
+	Working with branches
+		create feature branch from master
+		clone feature branch
+			git clone -b <branchname> <repourl>
+		commit & push changes to feature branch
+		create pull request to merge feature branch changes to master branch
+		
+	Git branches & merge conflicts
+		
+	BitBucket
+		bitbucket is a git-based source code repo hosting service owned by atlassina
+		bitbuycket offers both commerical plans and free acocunts with an unlimited number of pvt repos
+		bitbucket also uses git as version controle system
+		note: by using git bash we can perform operations with bitbucket repo
+		
+		
+	REaltime workflow
+		wehen we get new project to develop we ned a repo for that proj
+		to create new repo for proj we need to send email to git/bitbucket admin
+		admin will create repo and will share the repo url
+		in development team any one dev will create project folder structure and packages then he/she will push those files to repo
+		all the remaining devs will clone repo and then they will start work in proj
+		note: anybody can create branches and pull reqests in repo
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

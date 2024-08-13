@@ -1,0 +1,62 @@
+Docker notes:
+	
+	Default network for Docker containers:
+		Bridge
+
+	One container can connect to more than one network(endpoints) at a time
+
+	Network info like network_id, container_id & endpoints details will be displayed on container inspect command
+
+	Volume:
+		In Docker, "volume" refers to a mechanism that allows data to persist beyond the lifetime of a single Docker container. When a container is destroyed, any data stored within it is typically lost. Volumes provide a way to store and share data between Docker containers and between the Docker host and its containers.
+
+		Volumes are typically used for:
+
+		Persistent data storage: Volumes allow data to persist even if the container is stopped or removed. This is useful for databases, file uploads, logs, and other data that needs to be retained.
+
+		Sharing data between containers: Volumes can be mounted into multiple containers, allowing them to share data. This is useful for applications that are composed of multiple containers that need to access the same data.
+
+		Performance optimization: Docker volumes can be optimized for performance, allowing containers to access data more efficiently.
+
+		Volumes can be created and managed using Docker commands or through Docker Compose configuration files. There are different types of volumes in Docker, including:
+
+		Named volumes: Volumes that are given a specific name when created. These names can be used to refer to the volume in Docker commands and configuration files.
+
+		Anonymous volumes: Volumes that are created and managed by Docker itself. These volumes are typically used when the user does not need to refer to the volume by name.
+
+		Host-mounted volumes: Volumes that are mounted from the host filesystem into the container. This allows the container to access data on the host filesystem.
+
+		Volumes are an essential feature in Docker for managing data and building robust, stateful applications using containers.
+
+
+	Networks:
+		In Docker, a "network" refers to a communication mechanism that allows Docker containers to communicate with each other, with the host system, and with external networks. Docker provides various types of networks to facilitate different types of communication and isolation between containers.
+
+		Here are some key aspects of Docker networking:
+
+		Default Bridge Network: When Docker is installed, it automatically creates a default bridge network called "bridge." By default, containers are attached to this bridge network unless specified otherwise. Containers connected to the same bridge network can communicate with each other via IP addresses. However, by default, containers on different bridge networks cannot communicate directly with each other.
+
+		Custom Bridge Networks: Users can create custom bridge networks using Docker commands or Docker Compose configuration files. Custom bridge networks allow containers to communicate with each other across the same network. This is useful for isolating groups of containers and controlling communication between them.
+
+		Host Network: Containers can be attached to the host network, which allows them to directly access the network interfaces of the host system. This provides the highest level of network performance but reduces isolation between containers.
+
+		Overlay Network: Docker supports multi-host networking through overlay networks. Overlay networks use the VXLAN protocol to allow containers running on different Docker hosts to communicate with each other securely. This is useful for building distributed applications that span multiple hosts.
+
+		Macvlan Network: Docker supports Macvlan networks, which allow containers to have their own MAC addresses and appear as physical devices on the network. This is useful for scenarios where containers need direct access to the network with minimal overhead.
+
+		Third-Party Network Plugins: Docker supports third-party network plugins that extend its networking capabilities. These plugins can provide additional features such as advanced routing, security policies, and integration with external networking infrastructure.
+
+		Overall, Docker networking provides a flexible and powerful way to connect containers and manage communication between them, allowing developers to build complex, distributed applications with ease.
+
+
+
+
+
+
+
+
+
+
+
+
+
