@@ -4,13 +4,6 @@ https://blog.devgenius.io/java-8-coding-and-programming-interview-questions-and-
 Java 8 features:
 	Lambda expression
 		lambda expression can be applied on functional interface
-	Functional interface
-		interface which has only one abstract method and multiple static or default methods
-		ex: Runnable - run()
-			Callable - call()
-			Comparable - compareTo()
-			Comparator - compare()
-			
 			
 
 Java 8:
