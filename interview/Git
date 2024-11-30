@@ -33,6 +33,9 @@ Git
 			staged: eligible for commit
 			unstaged: modified but not eligible for commit
 			untracked: newly created files.
+		git branch --> lists all branches, with * for (current)active branch
+		git branch <branch-name>  --> creates a new branch on HEAD (tip of the current branch), doesn't switch to the branch though.
+		git switch <branch-name>  --> to switch to a diff branch
 		git pull --> to take latest changes from central repo to local repo
 		git checkout <filename> --> to replace local file with central repo file
 		git clone -b <branchname> <repourl>  --> to clone specific branch.
