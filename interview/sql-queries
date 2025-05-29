@@ -48,7 +48,7 @@
 	11. Write a SQL query to print details of the Students whose FIRST_NAME ends with ‘a’.
 		select * from student where first_name LIKE '%a'
 
-	12. Write an SQL query to print details of the Students whose FIRST_NAME ends with ‘a’ and contains six alphabets
+	12. Write an SQL query to print details of the Students whose FIRST_NAME ends with ‘a’ and contains atleast eight alphabets
 		select * from student where first_name LIKE '%______a'
 
 	13. Write an SQL query to print details of the Students whose GPA lies between 9.00 and 9.99.
@@ -69,7 +69,7 @@ kgj		select student.first_name, student_last_name, scholarship.amount, sholarshi
 		on
 		student.student_id = scholarship.student_ref_id
 
-	18. Write an SQL query to show only odd rows from Student table.
+	18. Write an SQL query to show student details whose student ids are odd.
 		select * from student where student_id%2 != 0
 
 	20. List all students and their scholarship amounts if they have received any. If a student has not received a scholarship, display NULL for the scholarship details.

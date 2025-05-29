@@ -277,13 +277,13 @@ Spring boot proj structure from spring initializr with maven
 		endpoints are prefixed with /actuator
 		
 		/health health info about your app
-			normally used to monitoring apps to see if your app is up or downloads
+			normally used to monitoring apps to see if your app is up or down
 			/actuator/health
 		/info info about your proj
 			default is empty
-			/actuator/indo
+			/actuator/info
 			update app.properties with your app info
-			eg: infor.app.name=My super cool application
+			eg: info.app.name=My super cool application
 				info.app.description=a craxy fun app
 				info.app.version=1.0.0
 				
@@ -569,7 +569,7 @@ Thread Lifecycle
 			It supports interceptors (similar to filters) that can pre-process and post-process requests. These interceptors can handle tasks such as logging, authentication, and authorization.
 
 	How spring boot run() method works internally:
-		* creates applicaiton context, after loading all your properties from properties file
+		* creates application context, after loading all your properties from properties file
 		* registers all your beans into context
 		* kicks of embedded server to run your jar
 
